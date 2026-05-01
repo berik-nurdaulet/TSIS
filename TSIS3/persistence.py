@@ -15,7 +15,6 @@ def load_settings():
         try:
             with open(SETTINGS_FILE, "r") as f:
                 data = json.load(f)
-                # merge with defaults in case new keys added
                 merged = dict(DEFAULT_SETTINGS)
                 merged.update(data)
                 return merged

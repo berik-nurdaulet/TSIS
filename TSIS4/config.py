@@ -1,4 +1,3 @@
-# Window
 WINDOW_WIDTH  = 800
 WINDOW_HEIGHT = 600
 TITLE         = "Snake Game"
@@ -30,7 +29,7 @@ POWERUP_EFFECT_SECONDS = 5   # how long effect lasts after collection
 SPEED_BOOST_BONUS = 4
 SLOW_MOTION_PENALTY = 4
 
-# Colors (default; overridden by settings.json)
+# Colors 
 BLACK      = (  0,   0,   0)
 WHITE      = (255, 255, 255)
 GREEN      = ( 50, 200,  50)

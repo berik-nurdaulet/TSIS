@@ -1,5 +1,3 @@
-# game.py — Snake game logic (all screens + gameplay)
-
 import pygame
 import random
 import sys

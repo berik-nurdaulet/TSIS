@@ -1,9 +1,3 @@
-"""
-States: main_menu → username → playing → game_over
-        main_menu → leaderboard → main_menu
-        main_menu → settings    → main_menu
-"""
-
 import pygame
 import sys
 

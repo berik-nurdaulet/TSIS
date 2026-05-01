@@ -1,18 +1,18 @@
 import pygame
 import math
 
-# ---------------- PENCIL ----------------
+#  PENCIL 
 def draw_pencil(surface, color, points, size):
     for i in range(len(points) - 1):
         pygame.draw.line(surface, color, points[i], points[i+1], size)
 
 
-# ---------------- LINE ----------------
+#  LINE 
 def draw_line(surface, color, start, end, size):
     pygame.draw.line(surface, color, start, end, size)
 
 
-# ---------------- RECTANGLE ----------------
+#  RECTANGLE 
 def draw_rect(surface, color, start, end, size):
     x1, y1 = start
     x2, y2 = end
@@ -22,20 +22,20 @@ def draw_rect(surface, color, start, end, size):
     pygame.draw.rect(surface, color, rect, size)
 
 
-# ---------------- SQUARE ----------------
+#  SQUARE 
 def draw_square(surface, color, start, end, size):
     side = min(abs(end[0]-start[0]), abs(end[1]-start[1]))
     rect = pygame.Rect(start[0], start[1], side, side)
     pygame.draw.rect(surface, color, rect, size)
 
 
-# ---------------- CIRCLE ----------------
+#  CIRCLE 
 def draw_circle(surface, color, start, end, size):
     radius = int(math.dist(start, end))
     pygame.draw.circle(surface, color, start, radius, size)
 
 
-# ---------------- TRIANGLES ----------------
+#  TRIANGLES 
 def draw_right_triangle(surface, color, start, end, size):
     x1, y1 = start
     x2, y2 = end
@@ -63,7 +63,7 @@ def draw_rhombus(surface, color, start, end, size):
     pygame.draw.polygon(surface, color, points, size)
 
 
-# ---------------- FLOOD FILL ----------------
+#  FLOOD FILL 
 def flood_fill(surface, x, y, new_color):
     target = surface.get_at((x, y))
 
@@ -86,6 +86,6 @@ def flood_fill(surface, x, y, new_color):
                 stack.append((cx, cy-1))
 
 
-# ---------------- ERASER ----------------
+#  ERASER 
 def erase(surface, position, size):
     pygame.draw.circle(surface, (255, 255, 255), position, size)

@@ -3,7 +3,7 @@ import random
 import math
 import os
 
-# fallback colours
+#colours
 ROAD_DARK   = (40,  40,  40)
 LANE_WHITE  = (240, 240, 220)
 LANE_YELLOW = (255, 210,   0)
@@ -441,7 +441,7 @@ class GameWorld:
         self._pu_counter  = 0
         self._pu_every    = 300
 
-        # preload road background
+        #background
         self._road_bg = _load("AnimatedStreet", ROAD_W, SCREEN_H)
 
     # helpers 
@@ -630,7 +630,7 @@ class GameWorld:
         else:
             pygame.draw.rect(surf, ROAD_DARK, (ROAD_LEFT, 0, ROAD_W, SCREEN_H))
 
-        # scrolling lane dashes (drawn on top of road sprite for clarity)
+        # scrolling lane dashes 
         for lane in range(1, NUM_LANES):
             lx = ROAD_LEFT + lane * LANE_W
             for sy in self.stripe_y:
@@ -662,5 +662,5 @@ class GameWorld:
         for t in self.traffic:
             t.draw(surf)
 
-        # player (drawn last = always on top)
+        # player 
         self.player.draw(surf)
