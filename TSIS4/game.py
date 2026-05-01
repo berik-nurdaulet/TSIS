@@ -9,9 +9,9 @@ import settings as settings_mod
 from config import *
 
 
-# ─────────────────────────────────────────────
+
 #  Utility helpers
-# ─────────────────────────────────────────────
+
 
 def cell_rect(col: int, row: int) -> pygame.Rect:
     return pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
@@ -42,9 +42,9 @@ def draw_button(surface, text, rect, color, hover_color, mouse_pos, font_size=22
     return hovered
 
 
-# ─────────────────────────────────────────────
+
 #  Food item
-# ─────────────────────────────────────────────
+
 
 class FoodItem:
     def __init__(self, kind: str, pos: tuple[int, int], spawn_time: int):
@@ -68,9 +68,9 @@ class FoodItem:
         pygame.draw.ellipse(surface, self.color, rect.inflate(-4, -4))
 
 
-# ─────────────────────────────────────────────
+
 #  Power-up item
-# ─────────────────────────────────────────────
+
 
 class PowerUp:
     def __init__(self, kind: str, pos: tuple[int, int], spawn_time: int):
@@ -98,9 +98,9 @@ class PowerUp:
         surface.blit(surf, surf.get_rect(center=rect.center))
 
 
-# ─────────────────────────────────────────────
+
 #  Main Game class
-# ─────────────────────────────────────────────
+
 
 class SnakeGame:
     def __init__(self, screen: pygame.Surface, username: str,
@@ -119,7 +119,7 @@ class SnakeGame:
 
         self._reset()
 
-    # ── initialise / reset ──────────────────
+    #initialise / reset
 
     def _reset(self):
         cx, cy = COLS // 2, ROWS // 2
@@ -145,8 +145,7 @@ class SnakeGame:
         self._spawn_food()
         self._spawn_food()   # start with 2 foods
 
-    # ── occupied cells ──────────────────────
-
+    #occupied cells
     def _occupied(self) -> set:
         occ = set(self.body)
         occ |= self.obstacles
@@ -155,7 +154,7 @@ class SnakeGame:
             occ.add(self.powerup.pos)
         return occ
 
-    # ── spawning ────────────────────────────
+    #spawning
 
     def _spawn_food(self):
         now  = pygame.time.get_ticks()
@@ -198,7 +197,7 @@ class SnakeGame:
                 occ.add((c, r))
                 placed += 1
 
-    # ── level up ────────────────────────────
+    #level up
 
     def _level_up(self):
         self.level      += 1
@@ -213,7 +212,7 @@ class SnakeGame:
         self._spawn_food()
         self._spawn_food()
 
-    # ── active effect ───────────────────────
+    #active effect
 
     def _apply_effect(self, kind: str):
         now = pygame.time.get_ticks()
@@ -233,7 +232,7 @@ class SnakeGame:
                 self.fps = min(BASE_FPS + (self.level - 1) * SPEED_PER_LEVEL, MAX_FPS)
                 self.effect_type = None
 
-    # ── main game loop ──────────────────────
+    #main game loop
 
     def run(self) -> dict:
         """Run gameplay. Returns result dict for Game Over screen."""
@@ -270,7 +269,7 @@ class SnakeGame:
             "best":   max(self.personal_best, self.score),
         }
 
-    # ── event handling ──────────────────────
+    #event handling
 
     def _handle_events(self):
         for event in pygame.event.get():
@@ -288,7 +287,7 @@ class SnakeGame:
                 elif event.key in (pygame.K_RIGHT, pygame.K_d) and dx == 0:
                     self.next_dir = (1,  0)
 
-    # ── movement & collision ─────────────────
+    #movement & collision 
 
     def _move(self):
         self.direction = self.next_dir
@@ -356,7 +355,7 @@ class SnakeGame:
         if not ate_food:
             self.body.pop()
 
-    # ── drawing ──────────────────────────────
+    #drawing 
 
     def _draw(self, now: int):
         self.screen.fill(BLACK)
@@ -417,9 +416,9 @@ class SnakeGame:
             self.screen.blit(eff_surf, (WINDOW_WIDTH // 2 - eff_surf.get_width() // 2, 4))
 
 
-# ─────────────────────────────────────────────
+
 #  Screen helpers (used by main.py)
-# ─────────────────────────────────────────────
+
 
 def screen_main_menu(screen: pygame.Surface, cfg: dict) -> str:
     """

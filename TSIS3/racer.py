@@ -3,7 +3,7 @@ import random
 import math
 import os
 
-# ── fallback colours (used when a sprite file is missing) ───────────────────
+# fallback colours
 ROAD_DARK   = (40,  40,  40)
 LANE_WHITE  = (240, 240, 220)
 LANE_YELLOW = (255, 210,   0)
@@ -18,7 +18,7 @@ CAR_COLORS = {
     "white":  (230, 230, 230),
 }
 
-# ── layout constants ─────────────────────────────────────────────────────────
+# layout constants 
 SCREEN_W, SCREEN_H = 480, 700
 NUM_LANES    = 4
 ROAD_LEFT    = 80
@@ -45,9 +45,9 @@ def lane_centre(lane):
     return ROAD_LEFT + lane * LANE_W + LANE_W // 2
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 #  Sprite / asset cache
-# ══════════════════════════════════════════════════════════════════════════════
+
 ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
 _cache: dict = {}
 
@@ -78,7 +78,7 @@ def _blit_centre(surf, img, cx, cy):
     surf.blit(img, (cx - img.get_width() // 2, cy - img.get_height() // 2))
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class Player:
     W, H = PLAYER_W, PLAYER_H
 
@@ -166,7 +166,7 @@ class Player:
                     [(fx, fy), (fx-5, fy+fh), (fx+5, fy+fh)])
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class TrafficCar:
     W, H = PLAYER_W, PLAYER_H
 
@@ -206,7 +206,7 @@ class TrafficCar:
             pygame.draw.circle(surf, (255,80,80), (x+w//2-7, y+h-6), 4)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class Obstacle:
     SPRITE_SIZES = {
         "oil":     (52, 44),
@@ -259,7 +259,7 @@ class Obstacle:
                 pygame.draw.rect(surf, (200,0,0), r, 2, border_radius=4)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class Coin:
     BASE_W, BASE_H = 36, 36
 
@@ -314,7 +314,7 @@ class Coin:
             surf.blit(lbl, (cx - lbl.get_width()//2, cy - lbl.get_height()//2))
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class PowerUp:
     SIZE = 48
     SPRITE_NAMES = {"nitro": "nitro", "shield": "shield", "repair": "repair"}
@@ -370,7 +370,7 @@ class PowerUp:
             surf.blit(t, (cx-t.get_width()//2, cy-t.get_height()//2))
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class RoadEvent:
     def __init__(self, event_type, speed):
         self.type  = event_type
@@ -405,7 +405,7 @@ class RoadEvent:
                 pygame.draw.rect(surf, col, (x+i, y, min(16,self.w-i), self.h))
 
 
-# ══════════════════════════════════════════════════════════════════════════════
+
 class GameWorld:
     def __init__(self, difficulty="medium", car_color="red", sound=True):
         params = DIFFICULTY_PARAMS[difficulty]
@@ -444,7 +444,7 @@ class GameWorld:
         # preload road background
         self._road_bg = _load("AnimatedStreet", ROAD_W, SCREEN_H)
 
-    # ── helpers ───────────────────────────────────────────────────────────────
+    # helpers 
     def _safe_lane(self, exclude=None):
         lanes = list(range(NUM_LANES))
         if exclude:
@@ -459,7 +459,7 @@ class GameWorld:
             s *= self.player.speed_mul
         return s
 
-    # ── spawners ──────────────────────────────────────────────────────────────
+    # spawners 
     def _try_spawn_coin(self):
         if self.tick % max(1, int(self.coin_freq)) == 0:
             self.coins.append(Coin(random.randint(0, NUM_LANES-1), 0))
@@ -487,7 +487,7 @@ class GameWorld:
             self.events.append(
                 RoadEvent(random.choice(["nitro_strip", "speed_bump"]), 0))
 
-    # ── update ────────────────────────────────────────────────────────────────
+    # update
     def update(self):
         if self.game_over or self.finished:
             return
@@ -616,7 +616,7 @@ class GameWorld:
         if key in (pygame.K_LEFT,  pygame.K_a): self.player.move(-1)
         if key in (pygame.K_RIGHT, pygame.K_d): self.player.move(1)
 
-    # ── draw ──────────────────────────────────────────────────────────────────
+    # draw
     def draw(self, surf):
         surf.fill(SKY_BLUE)
 

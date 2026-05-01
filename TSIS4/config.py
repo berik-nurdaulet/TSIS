@@ -1,5 +1,3 @@
-# config.py — Game constants
-
 # Window
 WINDOW_WIDTH  = 800
 WINDOW_HEIGHT = 600
@@ -68,5 +66,5 @@ POWERUP_COLORS = {
     "shield": PURPLE,
 }
 
-# DB connection string — edit to match your PostgreSQL setup
+# DB connection
 DB_DSN = "dbname=snake_game user=postgres password=Nurda2007 host=localhost port=5432"

@@ -1,9 +1,7 @@
 import psycopg2
 import json
 
-# =========================
 # CONNECTION
-# =========================
 def connect():
     return psycopg2.connect(
         host="localhost",
@@ -12,9 +10,7 @@ def connect():
         password="1234"
     )
 
-# =========================
 # ADD CONTACT
-# =========================
 def add_contact(conn):
     name = input("Name: ")
     email = input("Email: ")
@@ -50,12 +46,10 @@ def add_contact(conn):
         """, (cid, phone, ptype))
 
     conn.commit()
-    print("✅ Contact added")
+    print(" Contact added")
 
 
-# =========================
 # FILTER BY GROUP
-# =========================
 def filter_by_group(conn):
     group = input("Enter group: ")
 
@@ -72,9 +66,7 @@ def filter_by_group(conn):
             print(r)
 
 
-# =========================
 # SEARCH CONTACTS (ALL FIELDS)
-# =========================
 def search_contacts(conn):
     query = input("Search: ")
 
@@ -86,9 +78,7 @@ def search_contacts(conn):
             print(r)
 
 
-# =========================
 # SORT CONTACTS
-# =========================
 def sort_contacts(conn):
     print("Sort by: name / birthday")
     sort_by = input("> ")
@@ -107,9 +97,7 @@ def sort_contacts(conn):
             print(row)
 
 
-# =========================
 # PAGINATION
-# =========================
 def paginate(conn):
     limit = 5
     offset = 0
@@ -136,9 +124,7 @@ def paginate(conn):
             break
 
 
-# =========================
 # ADD PHONE (PROCEDURE)
-# =========================
 def add_phone(conn):
     name = input("Contact name: ")
     phone = input("Phone: ")
@@ -148,12 +134,10 @@ def add_phone(conn):
         cur.execute("CALL add_phone(%s, %s, %s)", (name, phone, ptype))
 
     conn.commit()
-    print("✅ Phone added")
+    print(" Phone added")
 
 
-# =========================
 # MOVE TO GROUP (PROCEDURE)
-# =========================
 def move_group(conn):
     name = input("Contact name: ")
     group = input("New group: ")
@@ -162,12 +146,10 @@ def move_group(conn):
         cur.execute("CALL move_to_group(%s, %s)", (name, group))
 
     conn.commit()
-    print("✅ Moved")
+    print(" Moved")
 
 
-# =========================
 # EXPORT JSON
-# =========================
 def export_json(conn):
     with conn.cursor() as cur:
         cur.execute("""
@@ -182,12 +164,10 @@ def export_json(conn):
     with open("contacts.json", "w") as f:
         json.dump(data, f, default=str, indent=4)
 
-    print("✅ Exported to contacts.json")
+    print(" Exported to contacts.json")
 
 
-# =========================
 # IMPORT JSON
-# =========================
 def import_json(conn):
     with open("contacts.json") as f:
         data = json.load(f)
@@ -232,12 +212,10 @@ def import_json(conn):
             """, (cid, phone, ptype))
 
     conn.commit()
-    print("✅ Imported")
+    print(" Imported")
 
 
-# =========================
 # MENU
-# =========================
 def menu():
     conn = connect()
 

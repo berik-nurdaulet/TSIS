@@ -1,7 +1,4 @@
 """
-TSIS 3 — Racer X: Advanced Driving
-Entry point and game state machine.
-
 States: main_menu → username → playing → game_over
         main_menu → leaderboard → main_menu
         main_menu → settings    → main_menu
@@ -25,11 +22,11 @@ def main():
     screen = pygame.display.set_mode((SCREEN_W, SCREEN_H))
     clock  = pygame.time.Clock()
 
-    # ── load persistent state ─────────────────────────────────────────────
+    # load persistent state
     settings    = load_settings()
     leaderboard = load_leaderboard()
 
-    # ── state ─────────────────────────────────────────────────────────────
+    # stat
     state    = "main_menu"
     username = "PLAYER"
     world    = None
@@ -54,7 +51,7 @@ def main():
             sound     =settings.get("sound",       True),
         )
 
-    # ── main loop ─────────────────────────────────────────────────────────
+    # main loop
     while True:
         events = pygame.event.get()
         for event in events:
@@ -66,7 +63,7 @@ def main():
                     state = "main_menu"
                     menu_screen = MainMenu()
 
-        # ── STATE: main_menu ─────────────────────────────────────────────
+        # STATE: main_menu
         if state == "main_menu":
             action = menu_screen.handle(events)
             if action == "play":
@@ -84,7 +81,7 @@ def main():
                 sys.exit()
             menu_screen.draw(screen)
 
-        # ── STATE: username ──────────────────────────────────────────────
+        # STATE: username
         elif state == "username":
             result = user_screen.handle(events)
             if result:
@@ -93,7 +90,7 @@ def main():
                 state = "playing"
             user_screen.draw(screen)
 
-        # ── STATE: playing ───────────────────────────────────────────────
+        # STATE: playing
         elif state == "playing":
             for event in events:
                 if event.type == pygame.KEYDOWN:
@@ -120,7 +117,7 @@ def main():
                 )
                 state = "game_over"
 
-        # ── STATE: game_over ─────────────────────────────────────────────
+        # STATE: game_over
         elif state == "game_over":
             action = over_screen.handle(events)
             if action == "retry":
@@ -131,7 +128,7 @@ def main():
                 state       = "main_menu"
             over_screen.draw(screen)
 
-        # ── STATE: leaderboard ───────────────────────────────────────────
+        # STATE: leaderboard
         elif state == "leaderboard":
             action = lb_screen.handle(events)
             if action == "back":
@@ -139,7 +136,7 @@ def main():
                 state       = "main_menu"
             lb_screen.draw(screen)
 
-        # ── STATE: settings ──────────────────────────────────────────────
+        # STATE: settings
         elif state == "settings":
             result = set_screen.handle(events)
             if result:

@@ -5,18 +5,18 @@ import tools
 
 pygame.init()
 
-# ---------------- SCREEN ----------------
+#  SCREEN 
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("TSIS 2 Paint")
 
 clock = pygame.time.Clock()
 
-# ---------------- CANVAS ----------------
+#  CANVAS 
 canvas = pygame.Surface((WIDTH, HEIGHT))
 canvas.fill((255, 255, 255))
 
-# ---------------- SETTINGS ----------------
+#  SETTINGS 
 color = (0, 0, 255)
 brush_size = 2
 tool = "pencil"
@@ -25,7 +25,7 @@ drawing = False
 start_pos = None
 points = []
 
-# ---------------- TEXT ----------------
+#  TEXT 
 font = pygame.font.SysFont("Arial", 24)
 
 text_input = ""
@@ -34,13 +34,13 @@ text_pos = None
 typing = False
 text_color = color
 
-# ---------------- SAVE FUNCTION ----------------
+#  SAVE FUNCTION 
 def save_canvas():
     filename = datetime.now().strftime("paint_%Y-%m-%d_%H-%M-%S.png")
     pygame.image.save(canvas, filename)
     print("Saved:", filename)
 
-# ---------------- MAIN LOOP ----------------
+#  MAIN LOOP 
 while True:
 
     for event in pygame.event.get():
@@ -50,12 +50,12 @@ while True:
             pygame.quit()
             sys.exit()
 
-        # ==================================================
+        
         # KEYBOARD
-        # ==================================================
+        
         if event.type == pygame.KEYDOWN:
 
-            # ---------------- COLORS ----------------
+            #  COLORS 
             if event.key == pygame.K_r:
                 color = (255, 0, 0)
 
@@ -65,7 +65,7 @@ while True:
             elif event.key == pygame.K_b:
                 color = (0, 0, 255)
 
-            # ---------------- BRUSH SIZE ----------------
+            #  BRUSH SIZE 
             elif event.key == pygame.K_1:
                 brush_size = 2
 
@@ -75,7 +75,7 @@ while True:
             elif event.key == pygame.K_3:
                 brush_size = 10
 
-            # ---------------- TOOLS ----------------
+            #  TOOLS 
             elif event.key == pygame.K_p:
                 tool = "pencil"
 
@@ -109,13 +109,13 @@ while True:
             elif event.key == pygame.K_x:
                 tool = "eraser"
 
-            # ---------------- SAVE ----------------
+            #  SAVE 
             elif event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
                 save_canvas()
 
-            # ==================================================
+            
             # TEXT TYPING
-            # ==================================================
+            
             if typing:
 
                 # FINALIZE TEXT
@@ -142,19 +142,19 @@ while True:
                 else:
                     text_input += event.unicode
 
-        # ==================================================
+        
         # MOUSE BUTTON DOWN
-        # ==================================================
+        
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             start_pos = event.pos
             drawing = True
 
-            # ---------------- FILL ----------------
+            #  FILL 
             if tool == "fill":
                 tools.flood_fill(canvas, *event.pos, color)
 
-            # ---------------- TEXT ----------------
+            #  TEXT 
             elif tool == "text":
 
                 text_pos = event.pos
@@ -165,19 +165,19 @@ while True:
                 # Save current color for this text
                 text_color = color
 
-            # ---------------- PENCIL ----------------
+            #  PENCIL 
             elif tool == "pencil":
                 points = [event.pos]
 
-        # ==================================================
+        
         # MOUSE BUTTON UP
-        # ==================================================
+        
         if event.type == pygame.MOUSEBUTTONUP:
 
             drawing = False
             end_pos = event.pos
 
-            # ---------------- LINE ----------------
+            #  LINE 
             if tool == "line":
                 tools.draw_line(
                     canvas,
@@ -187,7 +187,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- RECTANGLE ----------------
+            #  RECTANGLE 
             elif tool == "rect":
                 tools.draw_rect(
                     canvas,
@@ -197,7 +197,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- CIRCLE ----------------
+            #  CIRCLE 
             elif tool == "circle":
                 tools.draw_circle(
                     canvas,
@@ -207,7 +207,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- SQUARE ----------------
+            #  SQUARE 
             elif tool == "square":
                 tools.draw_square(
                     canvas,
@@ -217,7 +217,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- RIGHT TRIANGLE ----------------
+            #  RIGHT TRIANGLE 
             elif tool == "right_triangle":
                 tools.draw_right_triangle(
                     canvas,
@@ -227,7 +227,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- EQUILATERAL TRIANGLE ----------------
+            #  EQUILATERAL TRIANGLE 
             elif tool == "equilateral_triangle":
                 tools.draw_equilateral_triangle(
                     canvas,
@@ -237,7 +237,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- RHOMBUS ----------------
+            #  RHOMBUS 
             elif tool == "rhombus":
                 tools.draw_rhombus(
                     canvas,
@@ -247,12 +247,12 @@ while True:
                     brush_size
                 )
 
-        # ==================================================
+        
         # MOUSE MOTION
-        # ==================================================
+        
         if event.type == pygame.MOUSEMOTION and drawing:
 
-            # ---------------- PENCIL ----------------
+            #  PENCIL 
             if tool == "pencil":
 
                 points.append(event.pos)
@@ -264,7 +264,7 @@ while True:
                     brush_size
                 )
 
-            # ---------------- ERASER ----------------
+            #  ERASER 
             elif tool == "eraser":
 
                 tools.erase(
@@ -273,14 +273,14 @@ while True:
                     brush_size * 2
                 )
 
-    # ==================================================
+    
     # DRAW CANVAS
-    # ==================================================
+    
     screen.blit(canvas, (0, 0))
 
-    # ==================================================
+    
     # LIVE PREVIEW
-    # ==================================================
+    
     if drawing and start_pos:
 
         mouse_pos = pygame.mouse.get_pos()
@@ -355,9 +355,9 @@ while True:
                 brush_size
             )
 
-    # ==================================================
+    
     # TEXT PREVIEW
-    # ==================================================
+    
     if typing and text_input:
 
         preview = font.render(
@@ -368,8 +368,8 @@ while True:
 
         screen.blit(preview, text_pos)
 
-    # ==================================================
+    
     # UPDATE
-    # ==================================================
+    
     pygame.display.update()
     clock.tick(60)
